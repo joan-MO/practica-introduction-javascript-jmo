@@ -1,4 +1,4 @@
-import WorldCup from "./WorldCup"
+
 
 import WorldCup from './WorldCup.js'
 
@@ -8,7 +8,7 @@ export default class PointsWorldCup extends WorldCup {
     }
 
     produceGoalsMatch(){
-        return Math.round(Math.random * 10)
+        return Math.round(Math.random() * 10)
     }
 
     playWoldCup(match){
