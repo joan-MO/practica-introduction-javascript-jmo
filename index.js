@@ -1,32 +1,37 @@
 import WorldCup from './classes/PointsWorldCup.js'
+import { newArray } from './classes/WorldCup.js';
+//import { cup } from './classes/WorldCup.js'
 
-const config = { rounds: 1 }
-const worldcupteams = ['Spain','England','Japan','Mexico','Brazil', 'France', 'Germany', 'Polish']
-const worldcup2014 = new WorldCup('World Cup Brazil', worldcupteams,config )
+//const config = { rounds: 4 }
+const worldcupteams = ['Spain','England','Japan','Mexico','Polish','France','Brazil','Chinese','Canada','USA','Italy', 
+'Germany','Patata','Piedra','Tijeras','Pomelo']
+const match1 = new WorldCup('match1', worldcupteams )
 
-//console.log(worldcup2014);
+console.log(`===============================================
+===== COMIENZO DE LA FASE DE ELIMINATORIAS ======
+===============================================\n`);
 
-const teamNames = worldcup2014.teams.map(team => team)
+console.log(`===== OCTAVOS DE FINAL =====\n`);
 
+match1.playNewRound()
 
+console.log('===== CUARTOS DE FINAL =====\n');
 
-teamNames.forEach(function(equipo){
-    //console.log(equipo);
-})
+const match2 = new WorldCup('match2', newArray)
+match2.playNewRound()
 
-worldcup2014.scheduleMatchDays()
+console.log("===== SEMIFINALES =====\n");
 
-//console.log(worldcup2014.startWoldCup()); 
+const match3 = new WorldCup('match3', newArray)
+match3.playNewRound()
 
-worldcup2014.startWoldCup()
+console.log("===== FINAL =====\n");
 
-let count = 1
+const match4 = new WorldCup('match4', newArray)
+match4.playNewRound()
 
-worldcup2014.summaries.forEach(sumary =>{
-    console.log(`Resumen ${count}`)
-    sumary.results.forEach(result =>{
-        console.log(`${result.teamOne} ${result.teamGoalsOne} - ${result.teamTwo} ${result.teamGoaolsTwo}`);
-        console.log(result);
-    })
-    count++
-})
+console.log('===============================================\n');
+
+console.log(`${newArray} campeón del mundo`);
+console.log('===============================================');
+

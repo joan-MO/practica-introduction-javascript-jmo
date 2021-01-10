@@ -1,17 +1,13 @@
+export let newArray = []
+
 export default class WorldCup {
 
-    constructor(name, teams=[], config={}) {
+    constructor(name, teams=[]) {
         this.name = name
         this.matchDaySchedule = []
-        this.setup(config)
         this.setUpTeams(teams)
         this.summaries = []
-    }
-
-    setup(config){
-        const defaultConfig = { rounds: 1}
-        this.config = Object.assign(defaultConfig, config)
-       
+        //this.newArray = []
     }
 
     setUpTeams(NameOfTeams) {
@@ -19,7 +15,7 @@ export default class WorldCup {
     }
 
     initScheldule(round) {
-        const numberofMatchDays = this.teams.length - 1
+        const numberofMatchDays = 1
         const numberOfMatchesPerMatchDay = this.teams.length / 2
         for (let i = 0; i < numberofMatchDays; i++) {
             const matchDay = []
@@ -96,19 +92,8 @@ export default class WorldCup {
     }
 
     scheduleMatchDays(){
-        for (let i = 0; i < this.config.rounds; i++) {
-            const newRound = this.createRound()
-            if (i % 2 != 0) {
-                for (const matchDay of newRound) {
-                    for (const match of matchDay) {
-                        const teamOne = match[0]
-                        match[0] = match[1]
-                        match[1] = teamOne
-                    }
-                }
-            }
-            this.matchDaySchedule = this.matchDaySchedule.concat(newRound)
-        }
+        const newRound = this.createRound()
+        this.matchDaySchedule = this.matchDaySchedule.concat(newRound)
     }
 
     createRound() {
@@ -120,36 +105,53 @@ export default class WorldCup {
         return newRound
     }
 
-    
+    getTeamForName() {
+        return this.teams.find(team => team == this.name)
+    }
 
     startWoldCup(){
         for (const matchDay of this.matchDaySchedule) {
             const matchDaySummary = {
-                results: [],
-                //standings: undefined
+                results: []
             }
             for (const match of matchDay) {
-                const result = this.playWoldCup(match)
-                //this.updateTeamsResults(result)
+                const result = this.playMatchs(match)
                 matchDaySummary.results.push(result)
             }
-            //this.getStandings()
-            //matchDaySummary.standings = this.teams.map(team => Object.assign({}, team))
             this.summaries.push(matchDaySummary)
-            console.log(this.summaries);
         }
-        
     }
 
-    getStandings(){
-        throw new Error('getStandings method not implemented yet')
-    }
-
-    updateTeamsResults(){
-        throw new Error('updateTeamsResults method not implemented yet')
-    }
-
-    playWoldCup(match) {
+    playMatchs(match) {
         throw new Error('playWorldCup method not implemented yet')
+    }
+
+    getSummaries(){
+        let count = 1
+        newArray = []
+        this.summaries.forEach(sumary =>{
+            //console.log(`Resumen ${count}`)
+            sumary.results.forEach(result =>{
+               
+                console.log(`${result.teamOne} ${result.teamGoalsOne} - ${result.teamTwo} ${result.teamGoalsTwo}`);
+                
+                //console.log(result);
+                
+                if (result.teamGoalsOne > result.teamGoalsTwo) {
+                    newArray.push(result.teamOne)   
+                } else {
+                    newArray.push(result.teamTwo)
+                }
+            })
+            count++
+        })
+        console.log('\n');
+       //console.log(newArray);
+    }
+
+    playNewRound(){
+        this.scheduleMatchDays()
+        this.startWoldCup()
+        this.getSummaries()
     }
 }
