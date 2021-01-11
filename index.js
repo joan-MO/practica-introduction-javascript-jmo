@@ -3,8 +3,6 @@ import WorldCup from './classes/PointsWorldCup.js'
 import { teamsWinsOfRound } from './classes/WorldCup.js';
 import { url } from './data/data.js';
 
-
-
 try {
     const response = await axios.get(url)
     const apiWorldCupJson = response.data.teams
