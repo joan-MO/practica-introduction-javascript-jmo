@@ -34,7 +34,7 @@ try {
     const final = new WorldCup('final', teamsWinsOfRound)
     final.playNewRound()
 
-console.log(`==================================
+console.log(`===============================================
 ${teamsWinsOfRound} champion of the world 
 ===============================================`);
 
