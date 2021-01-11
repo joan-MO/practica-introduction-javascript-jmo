@@ -1,4 +1,4 @@
-export let newArray = []
+export let teamsWinsOfRound = []
 
 export default class WorldCup {
 
@@ -7,23 +7,26 @@ export default class WorldCup {
         this.matchDaySchedule = []
         this.setUpTeams(teams)
         this.summaries = []
-        //this.newArray = []
     }
 
     setUpTeams(NameOfTeams) {
         this.teams = [...NameOfTeams]
     }
 
+    numberOfMatchesPerMatchDay(matchDay){
+        const numberOfMatchesPerMatchDay = this.teams.length / 2
+        for (let j = 0; j < numberOfMatchesPerMatchDay; j++) {
+            const match = ['Equipo uno', 'Equipo dos']
+            matchDay.push(match)   
+        }
+    }
+
     initScheldule(round) {
         const numberofMatchDays = 1
-        const numberOfMatchesPerMatchDay = this.teams.length / 2
         for (let i = 0; i < numberofMatchDays; i++) {
             const matchDay = []
-            for (let j = 0; j < numberOfMatchesPerMatchDay; j++) {
-                const match = ['Equipo uno', 'Equipo dos']
-                matchDay.push(match)   
-            }
-          round.push(matchDay)
+            this.numberOfMatchesPerMatchDay(matchDay)
+            round.push(matchDay)
         }
     }
 
@@ -40,39 +43,56 @@ export default class WorldCup {
         }
     }
 
-    setTeamOne(round) {
+    matchDayTeamOne(matchDay){
         const teamNames = this.getTeamNamesForSchedule()
         const maxTeamOne = teamNames.length - 2
         let teamIndex = 0
+        matchDay.forEach(match => {
+            match[0] = teamNames[teamIndex]
+            teamIndex++
+            if (teamIndex > maxTeamOne) {
+                teamIndex = 0
+            }
+        });
+    }
+
+    setTeamOne(round) {
         round.forEach(matchDay => {
-            matchDay.forEach(match => {
-                match[0] = teamNames[teamIndex]
-                teamIndex++
-                if (teamIndex > maxTeamOne) {
-                    teamIndex = 0
+            this.matchDayTeamOne(matchDay);
+        });
+    }
+
+    matchDayTeamTwo(matchDay){
+        const teamNames = this.getTeamNamesForSchedule();
+        const maxTeamTwo = teamNames.length - 2
+        let teamIndex = maxTeamTwo
+        let firstMatchFound = false
+        matchDay.forEach(match => {
+            if (!firstMatchFound) {
+                firstMatchFound = true
+            } else {
+                match[1] = teamNames[teamIndex]
+                teamIndex--
+                if (teamIndex < 0) {
+                    teamIndex = maxTeamTwo
                 }
-            });
+            }
         });
     }
 
     setTeamTwo(round) {
-        const teamNames = this.getTeamNamesForSchedule();
-        const maxTeamTwo = teamNames.length - 2
-        let teamIndex = maxTeamTwo
         round.forEach(matchDay => {
-            let firstMatchFound = false
-            matchDay.forEach(match => {
-                if (!firstMatchFound) {
-                    firstMatchFound = true
-                } else {
-                    match[1] = teamNames[teamIndex]
-                    teamIndex--
-                    if (teamIndex < 0) {
-                        teamIndex = maxTeamTwo
-                    }
-                }
-            });
+            this.matchDayTeamTwo(matchDay)
         });
+    }
+
+    isMatchDayNumberPair(matchDayNumber, firstMatch, lastTeamName){
+        if (matchDayNumber % 2 == 0) {
+            firstMatch[1] = firstMatch[0]
+            firstMatch[0] = lastTeamName 
+        } else {
+            firstMatch[1] = lastTeamName
+        }
     }
 
     fixLastTeamSchedule(round) {
@@ -81,12 +101,7 @@ export default class WorldCup {
         const lastTeamName = teamNames[teamNames.length -1]
         round.forEach(matchDay => {
             const firstMatch = matchDay[0]
-            if (matchDayNumber % 2 == 0) {
-                firstMatch[1] = firstMatch[0]
-                firstMatch[0] = lastTeamName 
-            } else {
-                firstMatch[1] = lastTeamName
-            }
+            this.isMatchDayNumberPair(matchDayNumber, firstMatch, lastTeamName)
             matchDayNumber++
         });
     }
@@ -109,44 +124,43 @@ export default class WorldCup {
         return this.teams.find(team => team == this.name)
     }
 
+    matchDay(matchDay){
+        const matchDaySummary = {
+            results: []
+        }
+        for (const match of matchDay) {
+            const result = this.playMatchs(match)
+            matchDaySummary.results.push(result)
+        }
+        this.summaries.push(matchDaySummary)
+    }
+    
     startWoldCup(){
-        for (const matchDay of this.matchDaySchedule) {
-            const matchDaySummary = {
-                results: []
-            }
-            for (const match of matchDay) {
-                const result = this.playMatchs(match)
-                matchDaySummary.results.push(result)
-            }
-            this.summaries.push(matchDaySummary)
+        for (const matchDay of this.matchDaySchedule) {   
+            this.matchDay(matchDay); 
         }
     }
 
-    playMatchs(match) {
-        throw new Error('playWorldCup method not implemented yet')
+    checkWhoWin(result){
+        if (result.teamGoalsOne > result.teamGoalsTwo) {
+            console.log(`${result.teamOne} ${result.teamGoalsOne} - ${result.teamGoalsTwo} ${result.teamTwo}  => ${result.teamOne}`);
+            teamsWinsOfRound.push(result.teamOne)   
+        } else {
+            console.log(`${result.teamOne} ${result.teamGoalsOne} - ${result.teamGoalsTwo} ${result.teamTwo}  => ${result.teamTwo}`);
+            teamsWinsOfRound.push(result.teamTwo)
+        }
     }
 
     getSummaries(){
         let count = 1
-        newArray = []
+        teamsWinsOfRound = []
         this.summaries.forEach(sumary =>{
-            //console.log(`Resumen ${count}`)
             sumary.results.forEach(result =>{
-               
-                console.log(`${result.teamOne} ${result.teamGoalsOne} - ${result.teamTwo} ${result.teamGoalsTwo}`);
-                
-                //console.log(result);
-                
-                if (result.teamGoalsOne > result.teamGoalsTwo) {
-                    newArray.push(result.teamOne)   
-                } else {
-                    newArray.push(result.teamTwo)
-                }
+                this.checkWhoWin(result)    
             })
             count++
         })
-        console.log('\n');
-       //console.log(newArray);
+        console.log('             ');
     }
 
     playNewRound(){
@@ -154,4 +168,9 @@ export default class WorldCup {
         this.startWoldCup()
         this.getSummaries()
     }
+
+    playMatchs(match) {
+        throw new Error('playWorldCup method not implemented yet')
+    }
+
 }

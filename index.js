@@ -1,37 +1,35 @@
 import WorldCup from './classes/PointsWorldCup.js'
-import { newArray } from './classes/WorldCup.js';
-//import { cup } from './classes/WorldCup.js'
+import { teamsWinsOfRound } from './classes/WorldCup.js';
 
-//const config = { rounds: 4 }
 const worldcupteams = ['Spain','England','Japan','Mexico','Polish','France','Brazil','Chinese','Canada','USA','Italy', 
 'Germany','Patata','Piedra','Tijeras','Pomelo']
-const match1 = new WorldCup('match1', worldcupteams )
+const roundOf16 = new WorldCup('roundOf16', worldcupteams )
 
 console.log(`===============================================
-===== COMIENZO DE LA FASE DE ELIMINATORIAS ======
+===== START OF KNOCKOUT STAGE ======
 ===============================================\n`);
 
-console.log(`===== OCTAVOS DE FINAL =====\n`);
+console.log(`===== ROUND OF 16 =====\n`);
 
-match1.playNewRound()
+roundOf16.playNewRound()
 
-console.log('===== CUARTOS DE FINAL =====\n');
+console.log('===== QUARTER-FINALS =====\n');
 
-const match2 = new WorldCup('match2', newArray)
-match2.playNewRound()
+const quarterFinals = new WorldCup('quarterFinals', teamsWinsOfRound)
+quarterFinals.playNewRound()
 
-console.log("===== SEMIFINALES =====\n");
+console.log("===== SEMI-FINALS =====\n");
 
-const match3 = new WorldCup('match3', newArray)
-match3.playNewRound()
+const semiFinals = new WorldCup('semiFinals', teamsWinsOfRound)
+semiFinals.playNewRound()
 
 console.log("===== FINAL =====\n");
 
-const match4 = new WorldCup('match4', newArray)
-match4.playNewRound()
+const final = new WorldCup('final', teamsWinsOfRound)
+final.playNewRound()
 
-console.log('===============================================\n');
+console.log(`===============================================
+${teamsWinsOfRound} champion of the world
+===============================================`);
 
-console.log(`${newArray} campeón del mundo`);
-console.log('===============================================');
 
