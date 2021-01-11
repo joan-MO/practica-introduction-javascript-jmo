@@ -35,9 +35,9 @@ try {
     const final = new WorldCup('final', teamsWinsOfRound)
     final.playNewRound()
 
-    console.log(`===============================================
-    ${teamsWinsOfRound} champion of the world
-    ===============================================`);
+console.log(`==================================
+${teamsWinsOfRound} champion of the world 
+===============================================`);
 
 } catch(error) {
     console.error('ERROR', error);
