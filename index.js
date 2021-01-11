@@ -1,8 +1,9 @@
 import axios from 'axios';
 import WorldCup from './classes/PointsWorldCup.js'
 import { teamsWinsOfRound } from './classes/WorldCup.js';
+import { url } from './data/data.js';
 
-const url = 'https://raw.githubusercontent.com/openfootball/world-cup.json/master/2014/worldcup.teams.json'
+
 
 try {
     const response = await axios.get(url)
