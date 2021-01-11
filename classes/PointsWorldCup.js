@@ -1,5 +1,4 @@
 
-
 import WorldCup from './WorldCup.js'
 
 export default class PointsWorldCup extends WorldCup {
