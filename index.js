@@ -1,6 +1,6 @@
 import axios from 'axios';
 import WorldCup from './classes/PointsWorldCup.js'
-import { teamsWinsOfRound } from './classes/WorldCup.js';
+import { newArray, resultThird, teamsWinsOfRound } from './classes/WorldCup.js';
 import { url } from './data/data.js';
 
 try {
@@ -28,6 +28,16 @@ try {
 
     const semiFinals = new WorldCup('semiFinals', teamsWinsOfRound)
     semiFinals.playNewRound()
+
+    console.log('===== THIRD AND FOURTH PLACE =====\n');
+
+    if (resultThird[0].teamGoalsOne > resultThird[0].teamGoalsTwo) {
+        console.log(`${resultThird[0].teamOne} ${resultThird[0].teamGoalsOne} - ${resultThird[0].teamGoalsTwo} ${resultThird[0].teamTwo}  => ${resultThird[0].teamOne}\n`);
+       
+    } else {
+        console.log(`${resultThird[0].teamOne} ${resultThird[0].teamGoalsOne} - ${resultThird[0].teamGoalsTwo} ${resultThird[0].teamTwo}  => ${resultThird[0].teamTwo}\n`);
+        
+    }
 
     console.log("===== FINAL =====\n");
 

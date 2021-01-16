@@ -1,5 +1,6 @@
 export let teamsWinsOfRound = []
-
+export let newArray = []
+export let resultThird = []
 export default class WorldCup {
 
     constructor(name, teams=[]) {
@@ -7,6 +8,7 @@ export default class WorldCup {
         this.matchDaySchedule = []
         this.setUpTeams(teams)
         this.summaries = []
+      
     }
 
     setUpTeams(NameOfTeams) {
@@ -132,7 +134,26 @@ export default class WorldCup {
             const result = this.playMatchs(match)
             matchDaySummary.results.push(result)
         }
+
+        if (matchDaySummary.results.length === 2) {
+
+            matchDaySummary.results.forEach(result => {
+
+                if (result.teamGoalsOne < result.teamGoalsTwo) {
+                    newArray.push(result.teamOne)   
+                } else {
+                    newArray.push(result.teamTwo)
+                }
+        });
+
+        const result2 = this.playMatchs(newArray)
+
+        resultThird.push(result2)
+           
+        }
+      
         this.summaries.push(matchDaySummary)
+
     }
     
     startWoldCup(){
@@ -153,20 +174,24 @@ export default class WorldCup {
 
     getSummaries(){
         let count = 1
+       
         teamsWinsOfRound = []
-        this.summaries.forEach(sumary =>{
+        this.summaries.forEach(sumary =>{  
             sumary.results.forEach(result =>{
                 this.checkWhoWin(result)    
             })
             count++
         })
+      
         console.log('             ');
+     
     }
 
     playNewRound(){
         this.scheduleMatchDays()
         this.startWoldCup()
         this.getSummaries()
+        
     }
 
     playMatchs(match) {
