@@ -1,6 +1,6 @@
 import axios from 'axios';
 import WorldCup from './classes/PointsWorldCup.js'
-import { newArray, resultThird, teamsWinsOfRound } from './classes/WorldCup.js';
+import { resultThird, teamsWinsOfRound } from './classes/WorldCup.js';
 import { url } from './data/data.js';
 
 try {
